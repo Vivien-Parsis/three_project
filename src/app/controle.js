@@ -1,32 +1,31 @@
-const move = (threeObject, camera) => {
-    console.log("move", listKey)
+const speed = .6
+
+export const move = (threeObject, camera) => {
     if(listKey["z"] || listKey["ArrowUp"]){
-        threeObject.translateX(-.1)
-        camera.position.x+=-.1
+        threeObject.translateX(-speed)
+        camera.position.x+=-speed
     }
     if(listKey["s"] || listKey["ArrowDown"]){
-        threeObject.translateX(.1)
-        camera.position.x+=.1
+        threeObject.translateX(speed)
+        camera.position.x+=speed
     }
     if(listKey["q"] || listKey["ArrowLeft"]){
-        threeObject.translateZ(.1)
-        camera.position.z+=.1
+        threeObject.translateZ(speed)
+        camera.position.z+=speed
     }
     if(listKey["d"] || listKey["ArrowRight"]){
-        threeObject.translateZ(-.1)
-        camera.position.z+=-.1
+        threeObject.translateZ(-speed)
+        camera.position.z+=-speed
     }
 }
 let listKey = {}
-const authorizedKey = ["z","q","s","d","ArrowLeft","ArrowRight","ArrowUp","ArrowDown"]
-export const addControl = (threeObject, camera) => {
+export const addEvent = () => {
+    const authorizedKey = ["z","q","s","d","ArrowLeft","ArrowRight","ArrowUp","ArrowDown"]
     document.addEventListener("keydown",(event)=>{
         if(!authorizedKey.includes(event.key)){
             return
         }
-        console.log(listKey, event.key, "down")
         listKey[event.key] = true
-        move(threeObject, camera)
     })
     document.addEventListener("keyup",(event)=>{
         if(!authorizedKey.includes(event.key)){
@@ -34,7 +33,6 @@ export const addControl = (threeObject, camera) => {
         }
         //console.log(listKey, event.key, "up")
         listKey[event.key] = false
-        console.log("a")
-        move(threeObject, camera)
     })
 }
+

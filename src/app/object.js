@@ -8,16 +8,47 @@ mapTexture.repeat.x = 1
 mapTexture.repeat.y = 1
 mapTexture.wrapS = THREE.RepeatWrapping
 mapTexture.wrapT = THREE.RepeatWrapping
-
-export const plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(100, 5, 64, 64, 64),
-    new THREE.MeshStandardMaterial({map:mapTexture, aoMap:aoTexture, aoMapIntensity:1.5, displacementMap:displacementTexture, displacementScale:0.05})
+//dimension
+const planeDimension = {
+    x : 200,
+    z : 20
+}
+const carDimension = {
+    x : 3,
+    y : 1,
+    z : 2
+}
+const obstacleDimension = {
+    x : carDimension.x,
+    y : carDimension.y,
+    z : carDimension.z
+}
+//object
+const plane = new THREE.Mesh(
+    new THREE.PlaneGeometry(planeDimension.x, planeDimension.z, 64, 64, 64),
+    new THREE.MeshStandardMaterial({ color: 0x009900 })
 )
 
-export const car = new THREE.Mesh(
-    new THREE.BoxGeometry(1,1,1),
-    new THREE.MeshStandardMaterial({map:mapTexture, aoMap:aoTexture, aoMapIntensity:1.5, displacementMap:displacementTexture, displacementScale:0.05})    
+const car = new THREE.Mesh(
+    new THREE.BoxGeometry(carDimension.x,carDimension.y,carDimension.z),
+    new THREE.MeshStandardMaterial({ color: 0x000099 })    
 )
+
+let obstacleGroup = new THREE.Group()
+for(let i = 0; i < 50; i++){
+    const currentObstacle = new THREE.Mesh(
+        new THREE.BoxGeometry(obstacleDimension.x,obstacleDimension.y,obstacleDimension.z),
+        new THREE.MeshStandardMaterial({ color: 0x990000 }))
+    currentObstacle.position.set((Math.random()*(planeDimension.x - obstacleDimension.x /2))+1, 0,(Math.random()*(planeDimension.z - obstacleDimension.z / 2))+1);
+    obstacleGroup.add(currentObstacle )
+}
+
+const ambientLight = new THREE.AmbientLight(0xFFFFFF, 3)
 
 plane.rotation.x = -Math.PI * 0.5
-plane.position.y = -0.5
+plane.position.y -= carDimension.z / 2
+obstacleGroup.position.x -= planeDimension.x / 2
+obstacleGroup.position.z -= planeDimension.z / 2
+car.position.x += planeDimension.x / 2 - carDimension.x / 2
+
+export { car, plane, obstacleGroup , ambientLight }

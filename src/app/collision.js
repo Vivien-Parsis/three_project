@@ -28,7 +28,6 @@ const detectCollision = () => {
     if(currentCarPosition.z + carDimension.z/2 > planeDimension.z / 2){
         checkCollision.right = true
     }
-    console.log(currentCarPosition.z, )
     if(currentCarPosition.z - carDimension.z/2 < -planeDimension.z / 2){
         checkCollision.left = true
     }

@@ -35,14 +35,14 @@ const car = new THREE.Mesh(
 )
 
 let obstacleGroup = new THREE.Group()
-for(let i = 0; i < 50; i++){
+for(let i = 0; i < 20; i++){
     const currentObstacle = new THREE.Mesh(
         new THREE.BoxGeometry(obstacleDimension.x,obstacleDimension.y,obstacleDimension.z),
         new THREE.MeshStandardMaterial({ color: 0x990000 }))
-    currentObstacle.position.set((Math.random()*(planeDimension.x - obstacleDimension.x /2))+1, 0,(Math.random()*(planeDimension.z - obstacleDimension.z / 2))+1);
+    currentObstacle.position.set((Math.random()*(planeDimension.x - obstacleDimension.x /2))-10, 0,(Math.random()*(planeDimension.z - obstacleDimension.z))+1)
+    currentObstacle.geometry.computeBoundingBox()
     obstacleGroup.add(currentObstacle )
 }
-
 const ambientLight = new THREE.AmbientLight(0xFFFFFF, 3)
 
 plane.rotation.x = -Math.PI * 0.5
@@ -50,5 +50,7 @@ plane.position.y -= carDimension.z / 2
 obstacleGroup.position.x -= planeDimension.x / 2
 obstacleGroup.position.z -= planeDimension.z / 2
 car.position.x += planeDimension.x / 2 - carDimension.x / 2
+plane.geometry.computeBoundingBox()
+car.geometry.computeBoundingBox()
 
 export { car, plane, obstacleGroup , ambientLight }

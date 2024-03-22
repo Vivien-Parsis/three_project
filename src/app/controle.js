@@ -1,19 +1,19 @@
-const speed = .6
+const speed = .3
 
-export const move = (threeObject, camera) => {
-    if(listKey["z"] || listKey["ArrowUp"]){
+export const move = (threeObject, camera, checkCollision) => {
+    if((listKey["z"] || listKey["ArrowUp"]) && !(checkCollision.down&&!checkCollision.left&&!checkCollision.right)){
         threeObject.translateX(-speed)
         camera.position.x+=-speed
     }
-    if(listKey["s"] || listKey["ArrowDown"]){
+    if((listKey["s"] || listKey["ArrowDown"]) && !(checkCollision.up&&!checkCollision.left&&!checkCollision.right)){
         threeObject.translateX(speed)
         camera.position.x+=speed
     }
-    if(listKey["q"] || listKey["ArrowLeft"]){
+    if((listKey["q"] || listKey["ArrowLeft"]) && !(checkCollision.right&&!checkCollision.up&&!checkCollision.down)){
         threeObject.translateZ(speed)
         camera.position.z+=speed
     }
-    if(listKey["d"] || listKey["ArrowRight"]){
+    if((listKey["d"] || listKey["ArrowRight"]) && !(checkCollision.left&&!checkCollision.up&&!checkCollision.down)){
         threeObject.translateZ(-speed)
         camera.position.z+=-speed
     }

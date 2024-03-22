@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { plane, car, obstacleGroup, ambientLight } from './src/app/object'
 import { move, addEvent } from './src/app/controle'
 import { camera } from './src/app/camera'
+import { detectCollision } from './src/app/collision'
 
 const scene = new THREE.Scene()
 
@@ -11,7 +12,7 @@ const viewportSize = {
 }
 const aspectRatio = viewportSize.width / viewportSize.height
 
-window.addEventListener('resize',()=>{
+window.addEventListener('resize',() => {
     renderer.setSize(window.innerWidth, window.innerHeight)
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
@@ -26,8 +27,10 @@ scene.add(obstacleGroup)
 
 addEvent()
 
+
+
 const tick = () => {
-    move(car, camera)
+    move(car, camera, detectCollision())
     renderer.render(scene, camera)
     requestAnimationFrame(tick)
 }

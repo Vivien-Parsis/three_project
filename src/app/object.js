@@ -53,4 +53,4 @@ car.position.x += planeDimension.x / 2 - carDimension.x / 2
 plane.geometry.computeBoundingBox()
 car.geometry.computeBoundingBox()
 
-export { car, plane, obstacleGroup , ambientLight }
+export { car, plane, obstacleGroup , ambientLight, planeDimension, carDimension }

@@ -1,4 +1,4 @@
-import { car, obstacleGroup } from './object' 
+import { car, carDimension, obstacleGroup, planeDimension } from './object' 
 import * as THREE from "three"
 
 const detectCollision = () => {
@@ -25,9 +25,16 @@ const detectCollision = () => {
             dimension : currentBoxItem.getSize(new THREE.Vector3())
         })
     }
+    if(currentCarPosition.z + carDimension.z/2 > planeDimension.z / 2){
+        checkCollision.right = true
+    }
+    console.log(currentCarPosition.z, )
+    if(currentCarPosition.z - carDimension.z/2 < -planeDimension.z / 2){
+        checkCollision.left = true
+    }
     for(let obstacle of obstacleList){
         if((currentCarPosition.x <= obstacle.position.x + carSize.x && currentCarPosition.x >= obstacle.position.x - obstacle.dimension.x)
-        &&(currentCarPosition.z <= obstacle.position.z + carSize.z && currentCarPosition.z >= obstacle.position.z - obstacle.dimension.z)){
+        &&(currentCarPosition.z <= obstacle.position.z + carSize.z && currentCarPosition.z >= obstacle.position.z - obstacle.dimension.z)&&!checkCollision.hit){
             checkCollision.hit = true
             if(currentCarPosition.z - carSize.z > obstacle.position.z - obstacle.dimension.z*0.5){
                 checkCollision.left = true

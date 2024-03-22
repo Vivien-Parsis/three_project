@@ -10,7 +10,6 @@ const viewportSize = {
     width: window.innerWidth,
     height: window.innerHeight,
 }
-const aspectRatio = viewportSize.width / viewportSize.height
 
 window.addEventListener('resize',() => {
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -26,8 +25,6 @@ scene.add(car, plane, ambientLight, camera)
 scene.add(obstacleGroup)
 
 addEvent()
-
-
 
 const tick = () => {
     move(car, camera, detectCollision())

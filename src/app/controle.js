@@ -1,4 +1,4 @@
-const speed = .3
+const speed = .1
 
 export const move = (threeObject, camera, checkCollision) => {
     if((listKey["z"] || listKey["ArrowUp"]) && !(checkCollision.down&&!checkCollision.left&&!checkCollision.right)){

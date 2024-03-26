@@ -3,7 +3,9 @@ import { plane, car, obstacleGroup, ambientLight } from './src/app/object'
 import { move, addEvent } from './src/app/controle'
 import { camera } from './src/app/camera'
 import { detectCollision } from './src/app/collision'
+import { gui } from './src/app/debug'
 
+console.log(gui)
 const scene = new THREE.Scene()
 
 const viewportSize = {
@@ -16,7 +18,7 @@ window.addEventListener('resize',() => {
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
 })
-
+// scene.add(arrowGroup)
 const canvas = document.querySelector('#webgl')
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
 renderer.setSize(viewportSize.width, viewportSize.height)

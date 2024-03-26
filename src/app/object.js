@@ -1,5 +1,4 @@
 import * as THREE from "three"
-
 const textureLoader = new THREE.TextureLoader()
 const mapTexture = textureLoader.load('./src/assets/texture/Wood_Metal_Platform_01_SD-20240220T164131Z-001/Wood_Metal_Platform_01_SD/Substance_graph_basecolor.jpg')
 const aoTexture = textureLoader.load('./src/assets/texture/Wood_Metal_Platform_01_SD-20240220T164131Z-001/Wood_Metal_Platform_01_SD/Substance_graph_ambientOcclusion.jpg')
@@ -8,20 +7,19 @@ mapTexture.repeat.x = 1
 mapTexture.repeat.y = 1
 mapTexture.wrapS = THREE.RepeatWrapping
 mapTexture.wrapT = THREE.RepeatWrapping
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+const gltfLoader = new GLTFLoader()
+
+
 //dimension
 const planeDimension = {
-    x : 200,
+    x : 400,
     z : 20
 }
-const carDimension = {
+const obstacleDimension = {
     x : 3,
     y : 1,
     z : 2
-}
-const obstacleDimension = {
-    x : carDimension.x,
-    y : carDimension.y,
-    z : carDimension.z
 }
 //object
 const plane = new THREE.Mesh(
@@ -29,10 +27,10 @@ const plane = new THREE.Mesh(
     new THREE.MeshStandardMaterial({ color: 0x009900 })
 )
 
-const car = new THREE.Mesh(
-    new THREE.BoxGeometry(carDimension.x,carDimension.y,carDimension.z),
-    new THREE.MeshStandardMaterial({ color: 0x000099 })    
-)
+// const car = new THREE.Mesh(
+//     new THREE.BoxGeometry(carDimension.x,carDimension.y,carDimension.z),
+//     new THREE.MeshStandardMaterial({ color: 0x000099 })    
+// )
 
 let obstacleGroup = new THREE.Group()
 for(let i = 0; i < 20; i++){
@@ -45,12 +43,17 @@ for(let i = 0; i < 20; i++){
 }
 const ambientLight = new THREE.AmbientLight(0xFFFFFF, 3)
 
+let car = await gltfLoader.loadAsync("nissan_gt-r/scene.gltf").then((gltf)=>{return gltf.scene.children[0]})
 plane.rotation.x = -Math.PI * 0.5
-plane.position.y -= carDimension.z / 2
 obstacleGroup.position.x -= planeDimension.x / 2
 obstacleGroup.position.z -= planeDimension.z / 2
-car.position.x += planeDimension.x / 2 - carDimension.x / 2
 plane.geometry.computeBoundingBox()
-car.geometry.computeBoundingBox()
+car.rotation.z = - Math.PI / 2
+car.scale.set( 1 / planeDimension.z, 1 / planeDimension.z, 1 / planeDimension.z)
+const boxCar = new THREE.Box3()
+boxCar.setFromObject(car)
+const carSize = boxCar.getSize(new THREE.Vector3())
 
-export { car, plane, obstacleGroup , ambientLight, planeDimension, carDimension }
+car.position.x += planeDimension.x / 2 - carSize.x / 2
+plane.position.y -= carSize.z / 2
+export { car, plane, obstacleGroup , ambientLight, planeDimension }

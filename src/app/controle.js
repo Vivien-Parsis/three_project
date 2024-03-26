@@ -1,24 +1,22 @@
 
-
-export const speed = .1
 export const configControl = {
-    speed : .1
+    speed : .5
 }
 export const move = (threeObject, camera, checkCollision) => {
     if((listKey["z"] || listKey["ArrowUp"]) && !checkCollision.down){
-        threeObject.translateX(-configControl.speed)
+        threeObject.position.x+=-configControl.speed
         camera.position.x+=-configControl.speed
     }
     if((listKey["s"] || listKey["ArrowDown"]) && !checkCollision.up){
-        threeObject.translateX(configControl.speed)
+        threeObject.position.x+=configControl.speed
         camera.position.x+=configControl.speed
     }
     if((listKey["q"] || listKey["ArrowLeft"]) && !checkCollision.right){
-        threeObject.translateZ(configControl.speed)
+        threeObject.position.z+=configControl.speed
         camera.position.z+=configControl.speed
     }
     if((listKey["d"] || listKey["ArrowRight"]) && !checkCollision.left){
-        threeObject.translateZ(-configControl.speed)
+        threeObject.position.z+=-configControl.speed
         camera.position.z+=-configControl.speed
     }
     // console.log(listKey)

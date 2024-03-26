@@ -8,6 +8,7 @@ const detectCollision = () => {
         right : false,
         left : false,
         hit : false,
+        win : false
     }
     const currentCarPosition = new THREE.Vector3()
     car.getWorldPosition(currentCarPosition)
@@ -31,6 +32,12 @@ const detectCollision = () => {
     }
     if(currentCarPosition.z - carSize.z/2 < -planeDimension.z / 2){
         checkCollision.left = true
+    }
+    if(currentCarPosition.x > planeDimension.x / 2){
+        checkCollision.up = true
+    }
+    if(-currentCarPosition.x > planeDimension.x / 2){
+        checkCollision.win = true
     }
     checkCollision.hit = false
     for(let obstacle of obstacleList){

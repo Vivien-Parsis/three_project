@@ -26,7 +26,13 @@ scene.add(obstacleGroup)
 
 addEvent()
 const tick = () => {
-    move(car, camera, detectCollision())
+    const checkCollision = detectCollision()
+    if(checkCollision.win){
+        window.alert("win")
+        location.reload()
+        return
+    }
+    move(car, camera, checkCollision)
     renderer.render(scene, camera)
     requestAnimationFrame(tick)
 }
